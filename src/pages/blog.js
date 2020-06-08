@@ -2,42 +2,42 @@ import React from 'react'
 import Layout from '../components/layout'
 import {Link, graphql, useStaticQuery} from 'gatsby'
 import blogStyles from './blog.module.scss'
+import Head from '../components/head'
 
  const BlogPage = () =>{
 
     const data = useStaticQuery(graphql`
     query{
-        allMarkdownRemark{
-          edges{
-            node{
-              frontmatter{
-                title
-                date
-              }
-              timeToRead
-              wordCount{
-                words
-              }
-              fields{
-                slug
-              }
-            }
+      allContentfulBlogPost (
+        sort:{
+          fields:publishedDate,
+          order:DESC
+        }
+      ){
+        edges{
+          node{
+            title
+            slug
+            publishedDate(formatString:"MMMM Do, YYYY"
+            )
           }
         }
       }
+    }
     `)
    
     return (
         <Layout>
+        <Head title="Blog"/>
         <h1>Blog</h1>
         <ol className={blogStyles.posts}>
-        {data.allMarkdownRemark.edges.map((edge, index)=>{
+        {data.allContentfulBlogPost.edges.map((edge, index)=>{
             return(
                 <li key={index} className={blogStyles.post}>
-                <Link to={`/blog/${edge.node.fields.slug}`}>
-                <h1>Title: {edge.node.frontmatter.title}</h1>
-                <p>Date: {edge.node.frontmatter.date}</p>
-                    <span><strong>Word-count: </strong>{edge.node.wordCount.words}</span>
+                <Link to={`/blog/${edge.node.slug}`}>
+                <h1>Title: {edge.node.title}</h1>
+                <p>Date: {edge.node.publishedDate}</p>
+                   
                 </Link>
                     
                 </li>
@@ -47,3 +47,5 @@ import blogStyles from './blog.module.scss'
     )
 }
 export default BlogPage
+
+// <span><strong>Word-count: </strong>{edge.node.wordCount.words}</span>
