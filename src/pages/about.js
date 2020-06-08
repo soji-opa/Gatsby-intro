@@ -7,8 +7,8 @@ const AboutPage = ()=>{
     return(
         <Layout>
         <Head title="About"/>
-            <h1>About Azeez Olasoji</h1>
-            <h2>Got my MSc degree, on the path of self discovery</h2>
+            <h1>About Kingsley Oladipupo Akpeji</h1>
+            <h2>Obtained My B.Eng at UI & Post grad. degree at UCT</h2>
             <Link to="/contact"> want to work with me? reach out</Link>
         </Layout>
     )
